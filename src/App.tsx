@@ -1,4 +1,4 @@
-import { Flex, Grid, Heading } from '@chakra-ui/react';
+import { Flex, Grid, Heading, Image, Input, Text } from '@chakra-ui/react';
 import { ThemeContainer } from './theme/ThemeContainer';
 
 function App() {
@@ -17,7 +17,33 @@ function App() {
           '. . . .'
         ">
         <Flex gridArea='profile' flexDir='column' alignItems='flex-start'>
-          <Heading as='h1'>Hello Left!</Heading>
+          <Input
+            fontSize='sm'
+            placeholder='enter github username'
+            background='gray.100'
+            color='black'
+            _placeholder={{ color: 'gray.600' }}
+          />
+          <Image src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg' border='2px' />
+          <Heading as='h1' fontSize='xl'>
+            diegodvv
+          </Heading>
+          <Heading as='h2' fontSize='md'>
+            Diego Vieira
+          </Heading>
+
+          <Flex flexDir='column'>
+            <Text fontSize='lg' fontWeight='bold'>
+              50
+            </Text>
+            <Text fontSize='md'>followers</Text>
+          </Flex>
+          <Flex flexDir='column'>
+            <Text fontSize='lg' fontWeight='bold'>
+              50
+            </Text>
+            <Text fontSize='md'>repositories</Text>
+          </Flex>
         </Flex>
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
           <Heading as='h1'>Hello Right!</Heading>
