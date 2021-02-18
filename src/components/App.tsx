@@ -65,14 +65,12 @@ function App() {
         </Flex>
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
           <Heading>repositories</Heading>
-          <Flex flexDir='column'>
-            <VStack spacing='40px'>
-              <RepositoryCard />
-              <RepositoryCard />
-              <RepositoryCard />
-              <RepositoryCard />
-            </VStack>
-          </Flex>
+          <VStack spacing='40px' marginTop='24px'>
+            <RepositoryCard />
+            <RepositoryCard />
+            <RepositoryCard />
+            <RepositoryCard />
+          </VStack>
         </Flex>
       </Grid>
     </ThemeContainer>
