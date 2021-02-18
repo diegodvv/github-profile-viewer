@@ -1,4 +1,4 @@
-import { ChakraProvider, CSSReset } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import { theme } from './theme';
 
@@ -11,7 +11,6 @@ export const ThemeContainer: React.FC = ({ children }) => {
         -moz-osx-font-smoothing: grayscale;
       }`}
       </style>
-      <CSSReset />
       {children}
     </ChakraProvider>
   );
