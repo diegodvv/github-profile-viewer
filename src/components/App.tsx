@@ -8,7 +8,7 @@ function App() {
       <Grid
         as='main'
         height='100vh'
-        templateColumns='1fr 1fr 1fr 1fr'
+        templateColumns='1fr 526px 526px 1fr'
         templateRows='1fr 1fr 1fr 1fr'
         justifyContent='center'
         alignItems='flex-start'
