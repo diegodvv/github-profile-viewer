@@ -99,7 +99,8 @@ function App() {
           '. profile repositories .'
           '. paddingBottom . .'
         "
-        position='relative'>
+        position='relative'
+        backgroundColor='gray.800'>
         {loading && (
           <Box position='absolute' left='50%' top='50%'>
             <Flex position='relative' left='-50%' top='-50%'>
@@ -180,7 +181,7 @@ function App() {
             </VStack>
           </Flex>
         )}
-        <Box gridArea='paddingBottom' height='60px' />
+        <Box gridArea='paddingBottom' height='60px' width='1' />
       </Grid>
     </ThemeContainer>
   );

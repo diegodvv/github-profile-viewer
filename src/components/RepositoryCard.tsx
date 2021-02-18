@@ -25,25 +25,25 @@ export const RepositoryCard = ({ name, description, starsCount, url }: Props) =>
   return (
     <Flex
       flexDir='column'
-      backgroundColor='gray.100'
+      backgroundColor='gray.700'
       maxHeight='118px'
       width='526px'
       paddingX='24px'
       paddingTop='16px'
       paddingBottom='24px'
       boxShadow='lg'
-      _hover={{ backgroundColor: 'white', cursor: 'pointer' }}
+      _hover={{ backgroundColor: 'gray.900', cursor: 'pointer' }}
       onClick={() => window.open(url, '_blank')}>
       <Flex justifyContent='space-between'>
-        <Heading as='h3' color='black' fontSize='24px' isTruncated>
+        <Heading as='h3' color='gray.100' fontSize='24px' isTruncated>
           {name}
         </Heading>
         <Flex align='flex-start' paddingLeft='8px' paddingTop='4px'>
-          <Text color='gray.300'>{starsCount}</Text>
+          <Text color='gray.200'>{starsCount}</Text>
           <StarIcon marginLeft='6px' />
         </Flex>
       </Flex>
-      <Text color='gray.900' marginTop='11px' lineHeight='normal' noOfLines={2} isTruncated>
+      <Text color='gray.200' marginTop='11px' lineHeight='normal' noOfLines={2} isTruncated>
         {description}
       </Text>
     </Flex>

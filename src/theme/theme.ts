@@ -1,6 +1,24 @@
 import { extendTheme } from '@chakra-ui/react';
 
 export const theme = extendTheme({
+  styles: {
+    global: {
+      '*': {
+        '-webkit-font-smoothing': 'antialiased',
+        '-moz-osx-font-smoothing': 'grayscale',
+      },
+      '::-webkit-scrollbar': {
+        backgroundColor: '#202324',
+        color: '#aba499',
+      },
+      '::-webkit-scrollbar-corner': {
+        backgroundColor: 'gray.900',
+      },
+      '::-webkit-scrollbar-thumb': {
+        backgroundColor: 'gray.500',
+      },
+    },
+  },
   fonts: {
     body: 'Roboto, system-ui, sans-serif',
     heading: 'Roboto, system-ui, sans-serif',
@@ -21,10 +39,13 @@ export const theme = extendTheme({
   colors: {
     black: '#000',
     gray: {
-      900: '#1E1E1E',
-      800: '#252525',
-      300: '#5F5F5F',
-      100: '#F5F5F5',
+      900: '#181A1B',
+      800: '#1C1E1F',
+      700: '#1E2021',
+      500: '#454A4D',
+      300: '#ACA59A',
+      200: '#D5D1CC',
+      100: '#E8E6E3',
     },
     white: '#FFF',
   },
