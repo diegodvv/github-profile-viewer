@@ -1,5 +1,6 @@
 import { Flex, Grid, Heading, Image, Input, Text } from '@chakra-ui/react';
-import { ThemeContainer } from './theme/ThemeContainer';
+import { ThemeContainer } from '../theme/ThemeContainer';
+import { RepositoryCard } from './RepositoryCard';
 
 function App() {
   return (
@@ -46,7 +47,10 @@ function App() {
           </Flex>
         </Flex>
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
-          <Heading as='h1'>Hello Right!</Heading>
+          <Heading>repositories</Heading>
+          <Flex flexDir='column'>
+            <RepositoryCard />
+          </Flex>
         </Flex>
       </Grid>
     </ThemeContainer>
