@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Heading, Image, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, Grid, Heading, Image, Input, Spinner, Text, VStack } from '@chakra-ui/react';
 import axios, { CancelTokenSource } from 'axios';
 import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
@@ -80,11 +80,23 @@ function App() {
         templateRows='minmax(60px, 0) 1fr 1fr minmax(60px, 0) '
         justifyContent='center'
         alignItems='flex-start'
+        justifyItems='flex-start'
         templateAreas="
           '. . . .'
           '. profile repositories .'
           '. paddingBottom . .'
-        ">
+        "
+        position='relative'>
+        {loading && (
+          <Box position='absolute' left='50%' top='50%'>
+            <Flex position='relative' left='-50%' top='-50%'>
+              <Spinner size='xl' />
+              <Text fontSize='lg' marginLeft='4'>
+                Loading...
+              </Text>
+            </Flex>
+          </Box>
+        )}
         <Flex gridArea='profile' flexDir='column' alignItems='flex-start'>
           <VStack spacing='70px' alignItems='flex-start'>
             <Input
