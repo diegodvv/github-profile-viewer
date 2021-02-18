@@ -13,7 +13,7 @@ You can access it [here](https://github-profile-viewer-diegodvv.netlify.app/)!
 ## 💻 Techs
 
 - [React](https://reactjs.org/) and [Create React App](https://create-react-app.dev/)
-- [Chakra UI](https://chakra-ui.com/)
+- ⭐ [Chakra UI](https://chakra-ui.com/)
 
 ## 🚀 Run
 
