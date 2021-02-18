@@ -21,3 +21,9 @@ You can access it [here](https://github-profile-viewer-diegodvv.netlify.app/)!
 - Install dependencies `yarn install`
 - Start server `yarn start`
 - Open [http://localhost:3000](http://localhost:3000)
+
+### Todo
+- :white_check_mark: Show user profile information and repositories
+- :white_large_square: Show alert if user doesn't exist
+- :white_large_square: Support light theme
+- :white_large_square: Use transations with framer motion
