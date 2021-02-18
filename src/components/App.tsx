@@ -1,15 +1,17 @@
 import { Flex, Grid, Heading, Image, Input, Text, VStack } from '@chakra-ui/react';
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { RepositoryCard } from './RepositoryCard';
 
 function App() {
+  const [axiosCancelToken, setAxiosCancelToken] = useState<CancelTokenSource | null>(null);
+  const [inputText, setInputText] = useState('');
   const [
     { loading, name, repositories, followersCount, repositoriesCount, login, avatarUrl },
     setState,
   ] = useState({
-    loading: false,
+    loading: true,
     login: null as null | string,
     name: null as null | string,
     followersCount: null as null | number,
@@ -23,47 +25,51 @@ function App() {
   });
 
   useEffect(() => {
-    const source = axios.CancelToken.source();
-    (async () => {
-      setState((state) => ({ ...state, loading: true }));
-      const {
-        login,
-        avatar_url: avatarUrl,
-        name,
-        followers: followersCount,
-        public_repos: repositoriesCount,
-        repos_url,
-      } = (
-        await axios.get('https://api.github.com/users/diegodvv', {
-          cancelToken: source.token,
-        })
-      ).data as {
-        login: string;
-        avatar_url: string;
-        name: string;
-        followers: number;
-        public_repos: number;
-        repos_url: string;
-      };
-
-      const repositories = ((await axios.get(repos_url, { cancelToken: source.token })).data as {
-        description: string;
-        stargazers_count: number;
-        name: string;
-      }[])
-        .map(({ description, stargazers_count, name }) => ({
-          description,
-          starsCount: stargazers_count,
-          name,
-        }))
-        .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
-
-      setState({ loading: false, login, name, avatarUrl, followersCount, repositories, repositoriesCount });
-    })();
     return () => {
-      source.cancel();
+      axiosCancelToken?.cancel();
     };
-  }, []);
+  }, [axiosCancelToken]);
+
+  const fetchUserData = async () => {
+    const source = axios.CancelToken.source();
+    setAxiosCancelToken(source);
+
+    setState((state) => ({ ...state, loading: true }));
+    const {
+      login,
+      avatar_url: avatarUrl,
+      name,
+      followers: followersCount,
+      public_repos: repositoriesCount,
+      repos_url,
+    } = (
+      await axios.get(`https://api.github.com/users/${inputText}`, {
+        cancelToken: source.token,
+      })
+    ).data as {
+      login: string;
+      avatar_url: string;
+      name: string;
+      followers: number;
+      public_repos: number;
+      repos_url: string;
+    };
+
+    const repositories = ((await axios.get(repos_url, { cancelToken: source.token })).data as {
+      description: string;
+      stargazers_count: number;
+      name: string;
+    }[])
+      .map(({ description, stargazers_count, name }) => ({
+        description,
+        starsCount: stargazers_count,
+        name,
+      }))
+      .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
+
+    setState({ loading: false, login, name, avatarUrl, followersCount, repositories, repositoriesCount });
+    setAxiosCancelToken(null);
+  };
 
   return (
     <ThemeContainer>
@@ -87,6 +93,11 @@ function App() {
               background='gray.100'
               color='black'
               _placeholder={{ color: 'gray.600' }}
+              value={inputText}
+              onChange={(event) => setInputText(event.target.value)}
+              onKeyPress={(event) => {
+                if (event.code === 'Enter') fetchUserData();
+              }}
             />
 
             {!loading && (
