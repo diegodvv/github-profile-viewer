@@ -1,8 +1,32 @@
 import { Flex, Grid, Heading, Image, Input, Text, VStack } from '@chakra-ui/react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { RepositoryCard } from './RepositoryCard';
 
 function App() {
+  const [
+    { loading, name, repositories, followersCount, repositoriesCount, username },
+    setState,
+  ] = useState({
+    loading: false,
+    username: null as null | string,
+    name: null as null | string,
+    followersCount: null as null | number,
+    repositoriesCount: null as null | number,
+    repositories: [] as { name: string; description: string; starsCount: number }[],
+  });
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    (async () => {
+      await axios.get();
+    })();
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
   return (
     <ThemeContainer>
       <Grid
@@ -27,50 +51,55 @@ function App() {
               _placeholder={{ color: 'gray.600' }}
             />
 
-            <Flex flexDir='column'>
-              <Image
-                src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg'
-                border='2px'
-                width='184px'
-                height='184px'
-              />
+            {!loading && (
+              <>
+                <Flex flexDir='column'>
+                  <Image
+                    src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg'
+                    border='2px'
+                    width='184px'
+                    height='184px'
+                  />
 
-              <Heading as='h1' fontSize='xl' marginTop='24px'>
-                diegodvv
-              </Heading>
-              <Heading as='h2' fontSize='md'>
-                Diego Vieira
-              </Heading>
-            </Flex>
+                  <Heading as='h1' fontSize='xl' marginTop='24px'>
+                    {username}
+                  </Heading>
+                  <Heading as='h2' fontSize='md'>
+                    {name}
+                  </Heading>
+                </Flex>
 
-            <VStack flexDir='column' alignItems='flex-start' spacing='30px'>
-              <Flex flexDir='column'>
-                <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
-                  50
-                </Text>
-                <Text fontSize='md' lineHeight='normal'>
-                  followers
-                </Text>
-              </Flex>
-              <Flex flexDir='column'>
-                <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
-                  50
-                </Text>
-                <Text fontSize='md' lineHeight='normal'>
-                  repositories
-                </Text>
-              </Flex>
-            </VStack>
+                <VStack flexDir='column' alignItems='flex-start' spacing='30px'>
+                  <Flex flexDir='column'>
+                    <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
+                      {followersCount}
+                    </Text>
+                    <Text fontSize='md' lineHeight='normal'>
+                      followers
+                    </Text>
+                  </Flex>
+                  <Flex flexDir='column'>
+                    <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
+                      {repositoriesCount}
+                    </Text>
+                    <Text fontSize='md' lineHeight='normal'>
+                      repositories
+                    </Text>
+                  </Flex>
+                </VStack>
+              </>
+            )}
           </VStack>
         </Flex>
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
           <Heading>repositories</Heading>
-          <VStack spacing='40px' marginTop='24px'>
-            <RepositoryCard />
-            <RepositoryCard />
-            <RepositoryCard />
-            <RepositoryCard />
-          </VStack>
+          {!loading && (
+            <VStack spacing='40px' marginTop='24px'>
+              {repositories.map((repository, index) => (
+                <RepositoryCard {...repository} key={index} />
+              ))}
+            </VStack>
+          )}
         </Flex>
       </Grid>
     </ThemeContainer>
