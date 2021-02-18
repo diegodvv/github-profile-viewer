@@ -130,7 +130,7 @@ function App() {
               value={inputText}
               onChange={(event) => setInputText(event.target.value)}
               onKeyPress={(event) => {
-                if (event.code === 'Enter') fetchUserData();
+                if (event.key === 'Enter') fetchUserData();
               }}
             />
 
