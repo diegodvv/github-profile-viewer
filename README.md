@@ -27,3 +27,4 @@ You can access it [here](https://github-profile-viewer-diegodvv.netlify.app/)!
 - :white_large_square: Show alert if user doesn't exist
 - :white_large_square: Support light theme
 - :white_large_square: Use transitions with framer motion
+- :white_large_square: Render emoji on names and descriptions
