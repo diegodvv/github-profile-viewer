@@ -5,6 +5,7 @@ This project is an implementation of [this app idea](https://github.com/florinpo
 It consists of a page where you can search a github user and see information about him and his top 4 repositories. I made it as a way to study [Chakra UI](https://chakra-ui.com/) (had never used it before) and practice UI design skills.
 
 ## ⚡ Demo
+You can access it [here](https://github-profile-viewer-diegodvv.netlify.app/)!
 <p style="text-align: center;">
   <img src="demo.gif">
 </p>
