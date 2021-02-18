@@ -1,4 +1,4 @@
-import { Flex, Grid, Heading, Image, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, Grid, Heading, Image, Input, Text, VStack } from '@chakra-ui/react';
 import axios, { CancelTokenSource } from 'axios';
 import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
@@ -77,13 +77,13 @@ function App() {
         as='main'
         height='100vh'
         templateColumns='1fr 526px 526px 1fr'
-        templateRows='1fr 1fr 1fr 1fr'
+        templateRows='minmax(60px, 0) 1fr 1fr minmax(60px, 0) '
         justifyContent='center'
         alignItems='flex-start'
         templateAreas="
           '. . . .'
           '. profile repositories .'
-          '. . . .'
+          '. paddingBottom . .'
         ">
         <Flex gridArea='profile' flexDir='column' alignItems='flex-start'>
           <VStack spacing='70px' alignItems='flex-start'>
@@ -145,6 +145,7 @@ function App() {
             </VStack>
           )}
         </Flex>
+        <Box gridArea='paddingBottom' height='60px' />
       </Grid>
     </ThemeContainer>
   );
