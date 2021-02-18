@@ -1,4 +1,4 @@
-import { Flex, Grid, Heading, Image, Input, Text } from '@chakra-ui/react';
+import { Flex, Grid, Heading, Image, Input, Text, VStack } from '@chakra-ui/react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { RepositoryCard } from './RepositoryCard';
 
@@ -49,7 +49,12 @@ function App() {
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
           <Heading>repositories</Heading>
           <Flex flexDir='column'>
-            <RepositoryCard />
+            <VStack spacing='40px'>
+              <RepositoryCard />
+              <RepositoryCard />
+              <RepositoryCard />
+              <RepositoryCard />
+            </VStack>
           </Flex>
         </Flex>
       </Grid>
