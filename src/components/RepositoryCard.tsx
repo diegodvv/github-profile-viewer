@@ -15,7 +15,12 @@ const StarIcon = createIcon({
   defaultProps: { width: '20px', height: '20px' },
 });
 
-export const RepositoryCard = () => {
+type Props = {
+  name: string;
+  description: string;
+  starsCount: number;
+};
+export const RepositoryCard = ({ name, description, starsCount }: Props) => {
   return (
     <Flex
       flexDir='column'
@@ -27,17 +32,15 @@ export const RepositoryCard = () => {
       paddingBottom='24px'>
       <Flex justifyContent='space-between'>
         <Heading as='h3' color='black' fontSize='24px' isTruncated>
-          google-homepage-google-homepage-google-homepage
+          {name}
         </Heading>
         <Flex align='flex-start' paddingLeft='8px' paddingTop='4px'>
-          <Text color='gray.300'>50</Text>
+          <Text color='gray.300'>{starsCount}</Text>
           <StarIcon marginLeft='6px' />
         </Flex>
       </Flex>
       <Text color='gray.900' marginTop='11px' lineHeight='normal' noOfLines={2} isTruncated>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut Lorem
-        ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut Lorem ipsum
-        dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        {description}
       </Text>
     </Flex>
   );

@@ -50,11 +50,13 @@ function App() {
         description: string;
         stargazers_count: number;
         name: string;
-      }[]).map(({ description, stargazers_count, name }) => ({
-        description,
-        starsCount: stargazers_count,
-        name,
-      }));
+      }[])
+        .map(({ description, stargazers_count, name }) => ({
+          description,
+          starsCount: stargazers_count,
+          name,
+        }))
+        .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
 
       setState({ loading: false, login, name, avatarUrl, followersCount, repositories, repositoriesCount });
     })();
