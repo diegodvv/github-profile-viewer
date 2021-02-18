@@ -4,18 +4,9 @@ import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { RepositoryCard } from './RepositoryCard';
 
-type State = {
-  loading: boolean;
-  login: null | string;
-  name: null | string;
-  followersCount: null | number;
-  repositoriesCount: null | number;
-  avatarUrl: null | string;
-  repositories: { name: string; description: string; starsCount: number }[];
-};
 function App() {
   const [
-    { loading, name, repositories, followersCount, repositoriesCount, username, avatarUrl },
+    { loading, name, repositories, followersCount, repositoriesCount, login, avatarUrl },
     setState,
   ] = useState({
     loading: false,
@@ -34,6 +25,7 @@ function App() {
   useEffect(() => {
     const source = axios.CancelToken.source();
     (async () => {
+      setState((state) => ({ ...state, loading: true }));
       const {
         login,
         avatar_url: avatarUrl,
@@ -41,9 +33,30 @@ function App() {
         followers: followersCount,
         public_repos: repositoriesCount,
         repos_url,
-      }: Omit<State, 'repositories'> = await axios.get('https://api.github.com/users/diegodvv', {
-        cancelToken: source.token,
-      });
+      } = (
+        await axios.get('https://api.github.com/users/diegodvv', {
+          cancelToken: source.token,
+        })
+      ).data as {
+        login: string;
+        avatar_url: string;
+        name: string;
+        followers: number;
+        public_repos: number;
+        repos_url: string;
+      };
+
+      const repositories = ((await axios.get(repos_url, { cancelToken: source.token })).data as {
+        description: string;
+        stargazers_count: number;
+        name: string;
+      }[]).map(({ description, stargazers_count, name }) => ({
+        description,
+        starsCount: stargazers_count,
+        name,
+      }));
+
+      setState({ loading: false, login, name, avatarUrl, followersCount, repositories, repositoriesCount });
     })();
     return () => {
       source.cancel();
@@ -77,15 +90,10 @@ function App() {
             {!loading && (
               <>
                 <Flex flexDir='column'>
-                  <Image
-                    src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg'
-                    border='2px'
-                    width='184px'
-                    height='184px'
-                  />
+                  <Image src={avatarUrl!} border='2px' width='184px' height='184px' />
 
                   <Heading as='h1' fontSize='xl' marginTop='24px'>
-                    {username}
+                    {login}
                   </Heading>
                   <Heading as='h2' fontSize='md'>
                     {name}

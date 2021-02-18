@@ -65,7 +65,7 @@
       }
     ],
     "no-use-before-define": "off",
-    "no-debugger": "warn",
+    "no-debugger": "warn"
   },
   "root": true,
   "ignorePatterns": ["./config", "./html", "./node_modules", "./public", "./scripts"]
