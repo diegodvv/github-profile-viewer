@@ -105,7 +105,7 @@ function App() {
             <Flex position='relative' left='-50%' top='-50%'>
               {!hasSearched ? (
                 <Text fontSize='md' color='gray.200'>
-                  Search for a user by typing it's username and hitting {'<enter>'}
+                  search for a user by typing it's username and hitting {'<enter>'}
                 </Text>
               ) : (
                 <>
