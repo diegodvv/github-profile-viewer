@@ -28,8 +28,14 @@ function App() {
             />
 
             <Flex flexDir='column'>
-              <Image src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg' border='2px' />
-              <Heading as='h1' fontSize='xl'>
+              <Image
+                src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg'
+                border='2px'
+                width='184px'
+                height='184px'
+              />
+
+              <Heading as='h1' fontSize='xl' marginTop='24px'>
                 diegodvv
               </Heading>
               <Heading as='h2' fontSize='md'>
@@ -37,20 +43,24 @@ function App() {
               </Heading>
             </Flex>
 
-            <Flex flexDir='column'>
+            <VStack flexDir='column' alignItems='flex-start' spacing='30px'>
               <Flex flexDir='column'>
-                <Text fontSize='lg' fontWeight='bold'>
+                <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
                   50
                 </Text>
-                <Text fontSize='md'>followers</Text>
+                <Text fontSize='md' lineHeight='normal'>
+                  followers
+                </Text>
               </Flex>
               <Flex flexDir='column'>
-                <Text fontSize='lg' fontWeight='bold'>
+                <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
                   50
                 </Text>
-                <Text fontSize='md'>repositories</Text>
+                <Text fontSize='md' lineHeight='normal'>
+                  repositories
+                </Text>
               </Flex>
-            </Flex>
+            </VStack>
           </VStack>
         </Flex>
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
