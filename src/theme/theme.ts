@@ -28,6 +28,11 @@ export const theme = extendTheme({
     },
     white: '#FFF',
   },
+  radii: {
+    base: '0',
+    sm: '0',
+    md: '0',
+  },
   config: {
     initialColorMode: 'dark',
     useSystemColorMode: false,

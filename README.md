@@ -13,6 +13,7 @@ It consists of a page where you can search a github user and see information abo
 
 ## 🚀 Run
 
+- Clone repository `git clone https://github.com/diegodvv/github-profile-viewer.git`
 - Install dependencies `yarn install`
 - Start server `yarn start`
 - Open [http://localhost:3000](http://localhost:3000)
