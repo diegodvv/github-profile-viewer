@@ -18,33 +18,40 @@ function App() {
           '. . . .'
         ">
         <Flex gridArea='profile' flexDir='column' alignItems='flex-start'>
-          <Input
-            fontSize='sm'
-            placeholder='enter github username'
-            background='gray.100'
-            color='black'
-            _placeholder={{ color: 'gray.600' }}
-          />
-          <Image src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg' border='2px' />
-          <Heading as='h1' fontSize='xl'>
-            diegodvv
-          </Heading>
-          <Heading as='h2' fontSize='md'>
-            Diego Vieira
-          </Heading>
+          <VStack spacing='70px' alignItems='flex-start'>
+            <Input
+              fontSize='sm'
+              placeholder='enter github username'
+              background='gray.100'
+              color='black'
+              _placeholder={{ color: 'gray.600' }}
+            />
 
-          <Flex flexDir='column'>
-            <Text fontSize='lg' fontWeight='bold'>
-              50
-            </Text>
-            <Text fontSize='md'>followers</Text>
-          </Flex>
-          <Flex flexDir='column'>
-            <Text fontSize='lg' fontWeight='bold'>
-              50
-            </Text>
-            <Text fontSize='md'>repositories</Text>
-          </Flex>
+            <Flex flexDir='column'>
+              <Image src='https://avatars.dicebear.com/4.5/api/male/asdasdasd.svg' border='2px' />
+              <Heading as='h1' fontSize='xl'>
+                diegodvv
+              </Heading>
+              <Heading as='h2' fontSize='md'>
+                Diego Vieira
+              </Heading>
+            </Flex>
+
+            <Flex flexDir='column'>
+              <Flex flexDir='column'>
+                <Text fontSize='lg' fontWeight='bold'>
+                  50
+                </Text>
+                <Text fontSize='md'>followers</Text>
+              </Flex>
+              <Flex flexDir='column'>
+                <Text fontSize='lg' fontWeight='bold'>
+                  50
+                </Text>
+                <Text fontSize='md'>repositories</Text>
+              </Flex>
+            </Flex>
+          </VStack>
         </Flex>
         <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
           <Heading>repositories</Heading>
