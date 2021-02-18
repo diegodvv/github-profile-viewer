@@ -16,9 +16,15 @@ const StarIcon = () => {
 
 export const RepositoryCard = () => {
   return (
-    <Flex flexDir='column' backgroundColor='gray.100' maxHeight='118px'>
+    <Flex
+      flexDir='column'
+      backgroundColor='gray.100'
+      maxHeight='118px'
+      paddingX='24px'
+      paddingTop='16px'
+      paddingBottom='24px'>
       <Flex justifyContent='space-between'>
-        <Heading as='h3' color='black'>
+        <Heading as='h3' color='black' fontSize='24px'>
           google-homepage
         </Heading>
         <Flex>
@@ -26,10 +32,15 @@ export const RepositoryCard = () => {
           <StarIcon />
         </Flex>
       </Flex>
-      <Text color='gray.900' textOverflow='ellipsis' overflow='hidden'>
+      <Text
+        color='gray.900'
+        textOverflow='ellipsis'
+        overflow='hidden'
+        marginTop='11px'
+        lineHeight='normal'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna a...{' '}
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       </Text>
     </Flex>
   );
