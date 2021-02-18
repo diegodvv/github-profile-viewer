@@ -3,7 +3,7 @@
     "browser": true,
     "es6": true
   },
-  "extends": ["plugin:@typescript-eslint/eslint-recommended"],
+  "extends": ["plugin:@typescript-eslint/eslint-recommended", "prettier/@typescript-eslint"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -65,7 +65,7 @@
       }
     ],
     "no-use-before-define": "off",
-    "no-debugger": "warn"
+    "no-debugger": "warn",
   },
   "root": true,
   "ignorePatterns": ["./config", "./html", "./node_modules", "./public", "./scripts"]

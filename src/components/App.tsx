@@ -4,23 +4,46 @@ import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { RepositoryCard } from './RepositoryCard';
 
+type State = {
+  loading: boolean;
+  login: null | string;
+  name: null | string;
+  followersCount: null | number;
+  repositoriesCount: null | number;
+  avatarUrl: null | string;
+  repositories: { name: string; description: string; starsCount: number }[];
+};
 function App() {
   const [
-    { loading, name, repositories, followersCount, repositoriesCount, username },
+    { loading, name, repositories, followersCount, repositoriesCount, username, avatarUrl },
     setState,
   ] = useState({
     loading: false,
-    username: null as null | string,
+    login: null as null | string,
     name: null as null | string,
     followersCount: null as null | number,
     repositoriesCount: null as null | number,
-    repositories: [] as { name: string; description: string; starsCount: number }[],
+    avatarUrl: null as null | string,
+    repositories: [] as {
+      name: string;
+      description: string;
+      starsCount: number;
+    }[],
   });
 
   useEffect(() => {
     const source = axios.CancelToken.source();
     (async () => {
-      await axios.get();
+      const {
+        login,
+        avatar_url: avatarUrl,
+        name,
+        followers: followersCount,
+        public_repos: repositoriesCount,
+        repos_url,
+      }: Omit<State, 'repositories'> = await axios.get('https://api.github.com/users/diegodvv', {
+        cancelToken: source.token,
+      });
     })();
     return () => {
       source.cancel();
