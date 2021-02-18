@@ -19,8 +19,9 @@ type Props = {
   name: string;
   description: string;
   starsCount: number;
+  url: string;
 };
-export const RepositoryCard = ({ name, description, starsCount }: Props) => {
+export const RepositoryCard = ({ name, description, starsCount, url }: Props) => {
   return (
     <Flex
       flexDir='column'
@@ -29,7 +30,10 @@ export const RepositoryCard = ({ name, description, starsCount }: Props) => {
       width='526px'
       paddingX='24px'
       paddingTop='16px'
-      paddingBottom='24px'>
+      paddingBottom='24px'
+      boxShadow='lg'
+      _hover={{ backgroundColor: 'white', cursor: 'pointer' }}
+      onClick={() => window.open(url, '_blank')}>
       <Flex justifyContent='space-between'>
         <Heading as='h3' color='black' fontSize='24px' isTruncated>
           {name}

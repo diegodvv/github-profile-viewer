@@ -8,9 +8,10 @@ function App() {
   const [axiosCancelToken, setAxiosCancelToken] = useState<CancelTokenSource | null>(null);
   const [inputText, setInputText] = useState('');
   const [
-    { loading, name, repositories, followersCount, repositoriesCount, login, avatarUrl },
+    { hasSearched, loading, name, repositories, followersCount, repositoriesCount, login, avatarUrl },
     setState,
   ] = useState({
+    hasSearched: false,
     loading: true,
     login: null as null | string,
     name: null as null | string,
@@ -21,6 +22,7 @@ function App() {
       name: string;
       description: string;
       starsCount: number;
+      url: string;
     }[],
   });
 
@@ -34,7 +36,7 @@ function App() {
     const source = axios.CancelToken.source();
     setAxiosCancelToken(source);
 
-    setState((state) => ({ ...state, loading: true }));
+    setState((state) => ({ ...state, hasSearched: true, loading: true }));
     const {
       login,
       avatar_url: avatarUrl,
@@ -59,15 +61,26 @@ function App() {
       description: string;
       stargazers_count: number;
       name: string;
+      html_url: string;
     }[])
-      .map(({ description, stargazers_count, name }) => ({
+      .map(({ description, stargazers_count, name, html_url }) => ({
         description,
         starsCount: stargazers_count,
         name,
+        url: html_url,
       }))
       .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
 
-    setState({ loading: false, login, name, avatarUrl, followersCount, repositories, repositoriesCount });
+    setState({
+      hasSearched: true,
+      loading: false,
+      login,
+      name,
+      avatarUrl,
+      followersCount,
+      repositories,
+      repositoriesCount,
+    });
     setAxiosCancelToken(null);
   };
 
@@ -90,10 +103,18 @@ function App() {
         {loading && (
           <Box position='absolute' left='50%' top='50%'>
             <Flex position='relative' left='-50%' top='-50%'>
-              <Spinner size='xl' />
-              <Text fontSize='lg' marginLeft='4'>
-                Loading...
-              </Text>
+              {!hasSearched ? (
+                <Text fontSize='md' color='gray.200'>
+                  Search for a user by typing it's username and hitting {'<enter>'}
+                </Text>
+              ) : (
+                <>
+                  <Spinner size='xl' />
+                  <Text fontSize='lg' marginLeft='4'>
+                    Loading...
+                  </Text>
+                </>
+              )}
             </Flex>
           </Box>
         )}
@@ -102,6 +123,7 @@ function App() {
             <Input
               fontSize='sm'
               placeholder='enter github username'
+              width='128'
               background='gray.100'
               color='black'
               _placeholder={{ color: 'gray.600' }}
@@ -147,16 +169,17 @@ function App() {
             )}
           </VStack>
         </Flex>
-        <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
-          <Heading>repositories</Heading>
-          {!loading && (
+
+        {!loading && (
+          <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
+            <Heading>repositories</Heading>
             <VStack spacing='40px' marginTop='24px'>
               {repositories.map((repository, index) => (
                 <RepositoryCard {...repository} key={index} />
               ))}
             </VStack>
-          )}
-        </Flex>
+          </Flex>
+        )}
         <Box gridArea='paddingBottom' height='60px' />
       </Grid>
     </ThemeContainer>
