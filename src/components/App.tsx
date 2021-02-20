@@ -2,8 +2,8 @@ import { Box, Flex, Grid, Heading, Image, Input, Spinner, Text, VStack } from '@
 import axios, { AxiosError, CancelTokenSource } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
+import { ErrorModal as ErrorModal } from './ErrorModal';
 import { RepositoryCard } from './RepositoryCard';
-import { ErrorModal as ErrorModal } from './UserNotFoundErrorModal';
 
 function App() {
   const [axiosCancelToken, setAxiosCancelToken] = useState<CancelTokenSource | null>(null);
