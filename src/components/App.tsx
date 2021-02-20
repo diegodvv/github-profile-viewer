@@ -1,21 +1,9 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Image,
-  Input,
-  Spinner,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
-import axios, { CancelTokenSource } from 'axios';
-import { useEffect, useState } from 'react';
+import { Box, Flex, Grid, Heading, Image, Input, Spinner, Text, VStack } from '@chakra-ui/react';
+import axios, { AxiosError, CancelTokenSource } from 'axios';
+import { ReactNode, useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { RepositoryCard } from './RepositoryCard';
-import { UserNotFoundErrorModal } from './UserNotFoundErrorModal';
+import { ErrorModal as ErrorModal } from './UserNotFoundErrorModal';
 
 function App() {
   const [axiosCancelToken, setAxiosCancelToken] = useState<CancelTokenSource | null>(null);
@@ -38,7 +26,11 @@ function App() {
       url: string;
     }[],
   });
-  const errorModalDisclosure = useDisclosure();
+  const [errorModalState, setErrorModalState] = useState<{
+    isOpen: boolean;
+    title: string;
+    description: ReactNode;
+  }>({ isOpen: false, title: '', description: '' });
 
   useEffect(() => {
     return () => {
@@ -51,56 +43,108 @@ function App() {
     setAxiosCancelToken(source);
 
     setProfileDataState((state) => ({ ...state, hasSearched: true, loading: true }));
-    const {
-      login,
-      avatar_url: avatarUrl,
-      name,
-      followers: followersCount,
-      public_repos: repositoriesCount,
-      repos_url,
-    } = (
-      await axios.get(`https://api.github.com/users/${inputText}`, {
-        cancelToken: source.token,
-      })
-    ).data as {
-      login: string;
-      avatar_url: string;
-      name: string;
-      followers: number;
-      public_repos: number;
-      repos_url: string;
-    };
 
-    const repositories = ((await axios.get(repos_url, { cancelToken: source.token })).data as {
-      description: string;
-      stargazers_count: number;
-      name: string;
-      html_url: string;
-    }[])
-      .map(({ description, stargazers_count, name, html_url }) => ({
-        description,
-        starsCount: stargazers_count,
+    try {
+      const {
+        login,
+        avatar_url: avatarUrl,
         name,
-        url: html_url,
-      }))
-      .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
+        followers: followersCount,
+        public_repos: repositoriesCount,
+        repos_url,
+      } = (
+        await axios.get(`https://api.github.com/users/${inputText}`, {
+          cancelToken: source.token,
+        })
+      ).data as {
+        login: string;
+        avatar_url: string;
+        name: string;
+        followers: number;
+        public_repos: number;
+        repos_url: string;
+      };
 
-    setProfileDataState({
-      hasSearched: true,
-      loading: false,
-      login,
-      name,
-      avatarUrl,
-      followersCount,
-      repositories,
-      repositoriesCount,
-    });
+      const repositories = ((await axios.get(repos_url, { cancelToken: source.token })).data as {
+        description: string;
+        stargazers_count: number;
+        name: string;
+        html_url: string;
+      }[])
+        .map(({ description, stargazers_count, name, html_url }) => ({
+          description,
+          starsCount: stargazers_count,
+          name,
+          url: html_url,
+        }))
+        .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
+
+      setProfileDataState({
+        hasSearched: true,
+        loading: false,
+        login,
+        name,
+        avatarUrl,
+        followersCount,
+        repositories,
+        repositoriesCount,
+      });
+    } catch (error) {
+      if ((error as AxiosError).response) {
+        if ((error as AxiosError).response!.status === 404)
+          setErrorModalState((state) => ({
+            ...state,
+            isOpen: true,
+            title: 'User not found!',
+            description: (
+              <>
+                The user{' '}
+                <Text fontWeight='medium' display='inline'>
+                  {login}
+                </Text>{' '}
+                was not found. Please check if you mistyped anything if you think this is wrong.
+              </>
+            ),
+          }));
+        else
+          setErrorModalState((state) => ({
+            ...state,
+            isOpen: true,
+            title: 'Unknown server error!',
+            description: 'The server responded with an unknown error. Please try again later.',
+          }));
+      } else if ((error as AxiosError).request && (error as AxiosError).message === 'Network Error') {
+        setErrorModalState((state) => ({
+          ...state,
+          isOpen: true,
+          title: 'Network error!',
+          description: 'Please check if you have an active internet connection and try again.',
+        }));
+      } else {
+        setErrorModalState((state) => ({
+          ...state,
+          isOpen: true,
+          title: 'Unknown error!',
+          description: 'It was not possible to fetch the user information due to an unknown error.',
+        }));
+      }
+
+      setProfileDataState((state) => ({
+        ...state,
+        hasSearched: false,
+        loading: true,
+      }));
+    }
+
     setAxiosCancelToken(null);
   };
 
   return (
     <ThemeContainer>
-      <UserNotFoundErrorModal login={inputText} {...errorModalDisclosure} />
+      <ErrorModal
+        {...errorModalState}
+        onClose={() => setErrorModalState((state) => ({ ...state, isOpen: false }))}
+      />
       <Grid
         as='main'
         height='100vh'
@@ -119,9 +163,8 @@ function App() {
         {loading && (
           <Box position='absolute' left='50%' top='50%'>
             <Flex position='relative' left='-50%' top='-50%'>
-              <Button onClick={errorModalDisclosure.onOpen}>Discard</Button>
               {!hasSearched ? (
-                <Text fontSize='md' color='gray.200'>
+                <Text fontSize='md' color='gray.200' textAlign='center'>
                   search for a user by typing it's username and hitting {'<enter>'}
                 </Text>
               ) : (

@@ -8,16 +8,16 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
-  Text,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  login: string;
+  title: string;
+  description: ReactNode;
 };
-export const UserNotFoundErrorModal = ({ isOpen, onClose, login }: Props) => {
+export const ErrorModal = ({ isOpen, onClose, title, description }: Props) => {
   const cancelRef = useRef(null);
 
   return (
@@ -33,14 +33,8 @@ export const UserNotFoundErrorModal = ({ isOpen, onClose, login }: Props) => {
         <Alert status='error' backgroundColor='red.900' alignItems='flex-start'>
           <AlertIcon />
           <Box flex='1'>
-            <AlertTitle>User not found!</AlertTitle>
-            <AlertDescription display='block'>
-              The user{' '}
-              <Text fontWeight='medium' display='inline'>
-                {login}
-              </Text>{' '}
-              was not found. Please check if you mistyped anything if you think this is wrong.
-            </AlertDescription>
+            <AlertTitle>{title}</AlertTitle>
+            <AlertDescription display='block'>{description}</AlertDescription>
           </Box>
           <AlertDialogCloseButton marginRight='-3' marginTop='-2' />
         </Alert>

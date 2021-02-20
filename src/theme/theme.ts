@@ -4,8 +4,8 @@ export const theme = extendTheme({
   styles: {
     global: {
       '*': {
-        '-webkit-font-smoothing': 'antialiased',
-        '-moz-osx-font-smoothing': 'grayscale',
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
       },
       '::-webkit-scrollbar': {
         backgroundColor: '#202324',
