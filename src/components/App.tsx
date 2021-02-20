@@ -1,30 +1,31 @@
-import { Box, Flex, Grid, Heading, Image, Input, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, Grid, Input, Spinner, Text, VStack } from '@chakra-ui/react';
 import axios, { AxiosError, CancelTokenSource } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
 import { ErrorModal as ErrorModal } from './ErrorModal';
-import { RepositoryCard } from './RepositoryCard';
+import { ProfileInformation } from './ProfileInformation';
+import Repositories from './Repositories';
 
+export type ProfileData = {
+  login: string;
+  name: string;
+  followersCount: number;
+  repositoriesCount: number;
+  avatarUrl: string;
+  repositories: {
+    name: string;
+    description: string;
+    starsCount: number;
+    url: string;
+  }[];
+};
 function App() {
   const [axiosCancelToken, setAxiosCancelToken] = useState<CancelTokenSource | null>(null);
   const [inputText, setInputText] = useState('');
-  const [
-    { hasSearched, loading, name, repositories, followersCount, repositoriesCount, login, avatarUrl },
-    setProfileDataState,
-  ] = useState({
+  const [{ hasSearched, loading, profileData }, setProfileDataState] = useState({
     hasSearched: false,
     loading: true,
-    login: null as null | string,
-    name: null as null | string,
-    followersCount: null as null | number,
-    repositoriesCount: null as null | number,
-    avatarUrl: null as null | string,
-    repositories: [] as {
-      name: string;
-      description: string;
-      starsCount: number;
-      url: string;
-    }[],
+    profileData: null as null | ProfileData,
   });
   const [errorModalState, setErrorModalState] = useState<{
     isOpen: boolean;
@@ -82,12 +83,14 @@ function App() {
       setProfileDataState({
         hasSearched: true,
         loading: false,
-        login,
-        name,
-        avatarUrl,
-        followersCount,
-        repositories,
-        repositoriesCount,
+        profileData: {
+          login,
+          name,
+          avatarUrl,
+          followersCount,
+          repositories,
+          repositoriesCount,
+        },
       });
     } catch (error) {
       if ((error as AxiosError).response) {
@@ -194,52 +197,11 @@ function App() {
               }}
             />
 
-            {!loading && (
-              <>
-                <Flex flexDir='column'>
-                  <Image src={avatarUrl!} border='2px' width='184px' height='184px' />
-
-                  <Heading as='h1' fontSize='xl' marginTop='24px'>
-                    {login}
-                  </Heading>
-                  <Heading as='h2' fontSize='md'>
-                    {name}
-                  </Heading>
-                </Flex>
-
-                <VStack flexDir='column' alignItems='flex-start' spacing='30px'>
-                  <Flex flexDir='column'>
-                    <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
-                      {followersCount}
-                    </Text>
-                    <Text fontSize='md' lineHeight='normal'>
-                      followers
-                    </Text>
-                  </Flex>
-                  <Flex flexDir='column'>
-                    <Text fontSize='lg' fontWeight='bold' lineHeight='normal'>
-                      {repositoriesCount}
-                    </Text>
-                    <Text fontSize='md' lineHeight='normal'>
-                      repositories
-                    </Text>
-                  </Flex>
-                </VStack>
-              </>
-            )}
+            {!loading && <ProfileInformation {...profileData!} />}
           </VStack>
         </Flex>
 
-        {!loading && (
-          <Flex gridArea='repositories' flexDir='column' alignItems='flex-start'>
-            <Heading>repositories</Heading>
-            <VStack spacing='40px' marginTop='24px'>
-              {repositories.map((repository, index) => (
-                <RepositoryCard {...repository} key={index} />
-              ))}
-            </VStack>
-          </Flex>
-        )}
+        {!loading && <Repositories repositories={profileData!.repositories} />}
         <Box gridArea='paddingBottom' height='60px' width='1' />
       </Grid>
     </ThemeContainer>
