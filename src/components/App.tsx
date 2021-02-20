@@ -14,8 +14,8 @@ import {
 import axios, { CancelTokenSource } from 'axios';
 import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
-import { UserNotFoundErrorModal } from './ErrorModal';
 import { RepositoryCard } from './RepositoryCard';
+import { UserNotFoundErrorModal } from './UserNotFoundErrorModal';
 
 function App() {
   const [axiosCancelToken, setAxiosCancelToken] = useState<CancelTokenSource | null>(null);
