@@ -30,7 +30,7 @@ export const UserNotFoundErrorModal = ({ isOpen, onClose, login }: Props) => {
       <AlertDialogOverlay />
 
       <AlertDialogContent>
-        <Alert status='error'>
+        <Alert status='error' backgroundColor='red.900' alignItems='flex-start'>
           <AlertIcon />
           <Box flex='1'>
             <AlertTitle>User not found!</AlertTitle>
@@ -42,23 +42,9 @@ export const UserNotFoundErrorModal = ({ isOpen, onClose, login }: Props) => {
               was not found. Please check if you mistyped anything if you think this is wrong.
             </AlertDescription>
           </Box>
-          <AlertDialogCloseButton />
+          <AlertDialogCloseButton marginRight='-3' marginTop='-2' />
         </Alert>
       </AlertDialogContent>
-      {/* <AlertDialogContent>
-        <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
-        <AlertDialogBody>
-          {login} Are you sure you want to discard all of your notes? 44 words will be deleted.
-        </AlertDialogBody>
-        <AlertDialogFooter>
-          <Button ref={cancelRef} onClick={onClose}>
-            No
-          </Button>
-          <Button colorScheme='red' ml={3}>
-            Yes
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent> */}
     </AlertDialog>
   );
 };

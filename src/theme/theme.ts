@@ -60,6 +60,9 @@ export const theme = extendTheme({
       100: '#E8E6E3',
     },
     white: '#FFF',
+    red: {
+      900: '#231617',
+    },
   },
   radii: {
     base: '0',
