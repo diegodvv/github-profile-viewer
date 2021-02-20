@@ -100,7 +100,7 @@ function App() {
               <>
                 The user{' '}
                 <Text fontWeight='medium' display='inline'>
-                  {login}
+                  {inputText}
                 </Text>{' '}
                 was not found. Please check if you mistyped anything if you think this is wrong.
               </>
