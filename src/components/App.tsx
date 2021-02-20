@@ -2,6 +2,7 @@ import { Box, Flex, Grid, Input, Spinner, Text, VStack } from '@chakra-ui/react'
 import axios, { AxiosError, CancelTokenSource } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
+import ColorModeSwitch from './ColorModeSwitch';
 import { ErrorModal as ErrorModal } from './ErrorModal';
 import { ProfileInformation } from './ProfileInformation';
 import Repositories from './Repositories';
@@ -181,6 +182,8 @@ function App() {
             </Flex>
           </Box>
         )}
+
+        <ColorModeSwitch position='absolute' top='4' right='4' />
         <Flex gridArea='profile' flexDir='column' alignItems='flex-start'>
           <VStack spacing='70px' alignItems='flex-start'>
             <Input
