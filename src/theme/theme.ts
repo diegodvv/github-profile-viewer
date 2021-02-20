@@ -4,8 +4,8 @@ export const theme = extendTheme({
   styles: {
     global: {
       '*': {
-        '-webkit-font-smoothing': 'antialiased',
-        '-moz-osx-font-smoothing': 'grayscale',
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
       },
       '::-webkit-scrollbar': {
         backgroundColor: '#202324',
@@ -16,6 +16,18 @@ export const theme = extendTheme({
       },
       '::-webkit-scrollbar-thumb': {
         backgroundColor: 'gray.500',
+      },
+    },
+  },
+  components: {
+    Alert: {
+      baseStyle: {
+        backgroundColor: ({ status }) => (status === 'error' ? '#231617' : '#FFF'),
+      },
+      status: {
+        error: {
+          backgroundColor: '#231617',
+        },
       },
     },
   },
@@ -48,6 +60,9 @@ export const theme = extendTheme({
       100: '#E8E6E3',
     },
     white: '#FFF',
+    red: {
+      900: '#231617',
+    },
   },
   radii: {
     base: '0',

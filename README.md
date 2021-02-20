@@ -24,7 +24,7 @@ You can access it [here](https://github-profile-viewer-diegodvv.netlify.app/)!
 
 ### Todo
 - :white_check_mark: Show user profile information and repositories
-- :white_large_square: Show alert if user doesn't exist
+- :white_check_mark: Show alert if user doesn't exist
 - :white_large_square: Support light theme
 - :white_large_square: Use transitions with framer motion
 - :white_large_square: Render emoji on names and descriptions
