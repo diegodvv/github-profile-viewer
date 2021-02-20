@@ -1,7 +1,20 @@
-import { Box, Flex, Grid, Heading, Image, Input, Spinner, Text, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Heading,
+  Image,
+  Input,
+  Spinner,
+  Text,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react';
 import axios, { CancelTokenSource } from 'axios';
 import { useEffect, useState } from 'react';
 import { ThemeContainer } from '../theme/ThemeContainer';
+import { UserNotFoundErrorModal } from './ErrorModal';
 import { RepositoryCard } from './RepositoryCard';
 
 function App() {
@@ -9,7 +22,7 @@ function App() {
   const [inputText, setInputText] = useState('');
   const [
     { hasSearched, loading, name, repositories, followersCount, repositoriesCount, login, avatarUrl },
-    setState,
+    setProfileDataState,
   ] = useState({
     hasSearched: false,
     loading: true,
@@ -25,6 +38,7 @@ function App() {
       url: string;
     }[],
   });
+  const errorModalDisclosure = useDisclosure();
 
   useEffect(() => {
     return () => {
@@ -36,7 +50,7 @@ function App() {
     const source = axios.CancelToken.source();
     setAxiosCancelToken(source);
 
-    setState((state) => ({ ...state, hasSearched: true, loading: true }));
+    setProfileDataState((state) => ({ ...state, hasSearched: true, loading: true }));
     const {
       login,
       avatar_url: avatarUrl,
@@ -71,7 +85,7 @@ function App() {
       }))
       .sort(({ starsCount: a }, { starsCount: b }) => -(a - b));
 
-    setState({
+    setProfileDataState({
       hasSearched: true,
       loading: false,
       login,
@@ -86,6 +100,7 @@ function App() {
 
   return (
     <ThemeContainer>
+      <UserNotFoundErrorModal login={inputText} {...errorModalDisclosure} />
       <Grid
         as='main'
         height='100vh'
@@ -104,6 +119,7 @@ function App() {
         {loading && (
           <Box position='absolute' left='50%' top='50%'>
             <Flex position='relative' left='-50%' top='-50%'>
+              <Button onClick={errorModalDisclosure.onOpen}>Discard</Button>
               {!hasSearched ? (
                 <Text fontSize='md' color='gray.200'>
                   search for a user by typing it's username and hitting {'<enter>'}

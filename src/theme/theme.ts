@@ -19,6 +19,18 @@ export const theme = extendTheme({
       },
     },
   },
+  components: {
+    Alert: {
+      baseStyle: {
+        backgroundColor: ({ status }) => (status === 'error' ? '#231617' : '#FFF'),
+      },
+      status: {
+        error: {
+          backgroundColor: '#231617',
+        },
+      },
+    },
+  },
   fonts: {
     body: 'Roboto, system-ui, sans-serif',
     heading: 'Roboto, system-ui, sans-serif',
