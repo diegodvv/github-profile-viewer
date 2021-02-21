@@ -4,11 +4,14 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { theme } from './theme/theme';
+import { ThemeContainer } from './theme/ThemeContainer';
 
 ReactDOM.render(
   <React.StrictMode>
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-    <App />
+    <ThemeContainer>
+      <App />
+    </ThemeContainer>
   </React.StrictMode>,
   document.getElementById('root'),
 );

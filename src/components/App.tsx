@@ -1,7 +1,6 @@
 import { Box, Flex, Grid, Input, Spinner, Text, VStack } from '@chakra-ui/react';
 import axios, { AxiosError, CancelTokenSource } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
-import { ThemeContainer } from '../theme/ThemeContainer';
 import ColorModeSwitch from './ColorModeSwitch';
 import { ErrorModal as ErrorModal } from './ErrorModal';
 import { ProfileInformation } from './ProfileInformation';
@@ -144,7 +143,7 @@ function App() {
   };
 
   return (
-    <ThemeContainer>
+    <>
       <ErrorModal
         {...errorModalState}
         onClose={() => setErrorModalState((state) => ({ ...state, isOpen: false }))}
@@ -207,7 +206,7 @@ function App() {
         {!loading && <Repositories repositories={profileData!.repositories} />}
         <Box gridArea='paddingBottom' height='60px' width='1' />
       </Grid>
-    </ThemeContainer>
+    </>
   );
 }
 
