@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Input, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, Grid, Input, Spinner, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import axios, { AxiosError, CancelTokenSource } from 'axios';
 import { ReactNode, useEffect, useState } from 'react';
 import ColorModeSwitch from './ColorModeSwitch';
@@ -162,7 +162,7 @@ function App() {
           '. paddingBottom . .'
         "
         position='relative'
-        backgroundColor='gray.800'>
+        backgroundColor={useColorModeValue('gray.100', 'gray.800')}>
         {loading && (
           <Box position='absolute' left='50%' top='50%'>
             <Flex position='relative' left='-50%' top='-50%'>
